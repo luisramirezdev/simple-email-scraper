@@ -4,6 +4,8 @@ If you have a long list with domains, you put this list on `domains.txt`, and th
 
 ## Requirements
 
+Python 3
+
 `pip install -r requirements.txt`
 
 ## How to use?
