@@ -25,3 +25,7 @@ domain-3.com/contact
 3. Select option 1 for run script.
 
 4. When the script finished, you can view all result on `emails.txt`.
+
+## Thanks
+
+- Thanks to **Oleh Kopyl**, report problem with request in some websites and duplicate emails.
