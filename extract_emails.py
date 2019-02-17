@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import re
-import urllib
-from urllib.request import urlopen
-from urllib.request import urlretrieve
-from urllib.parse import quote
-
+import requests
 
 # Get emails function
 def run_emails():
@@ -14,31 +9,34 @@ def run_emails():
     with open(filepath) as fp:
         for line in fp:
             try:
-                print (line)
-                page_1 = urlopen("http://%s" % line).read().decode('ISO-8859-1')
-
-                match = re.findall(r'[\w\.-]+@[\w\.-]+', page_1)
+                r = requests.get("http://%s" % line)
+                r.encoding = 'ISO-8859-1'
+                page_1 = r.text
+                match = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b', page_1)
                 with open("emails.txt", "a") as f:
                     for s in match:
-                        f.write(str(s) +"\n")
+                        f.write(str(s) + "\n")
 
-            except urllib.error.HTTPError as e:
-                if e.code in (..., 403, ...):
-                    continue
-            except urllib.error.URLError as e:
-                print("Skip -> URL Error")
+                removeDups("emails.txt", "emails.txt")
     Continue()
 
+# Remove Duplicate
+def removeDups(inputfile, outputfile):
+    lines = open(inputfile, 'r').readlines()
+    lines_set = set(lines)
+    out = open(outputfile, 'w')
+    for line in lines_set:
+        out.write(line)
 
 # Main function
 def main():
-    print ("==============")
-    print ("What option do you want?")
-    print ("")
-    print ("1.- I have txt with domains to extract")
-    print ("0.- Exit")
-    print ("")
-    print ("==============")
+    print("==============")
+    print("What option do you want?")
+    print("")
+    print("1.- I have txt with domains to extract")
+    print("0.- Exit")
+    print("")
+    print("==============")
     input_main = input("Select an option: ")
 
     if (input_main == '1'):
@@ -51,6 +49,8 @@ def main():
         pass
 
 # Function to continue
+
+
 def Continue():
     keep_going = input('Do you want to keep going? Enter yes or no. \n'
                        '').lower()
