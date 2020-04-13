@@ -1,4 +1,4 @@
 domain.com
-domain.com/contacto
+domain.com/contact
 domain-cool.com
-domain-cool.com/contacto
+domain-cool.com/contact
